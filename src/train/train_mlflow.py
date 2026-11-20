@@ -1,8 +1,8 @@
 
 """Lab 3: Train candidate models and record every run in MLflow."""
 
-import sys
 import os
+import sys
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
@@ -20,7 +20,6 @@ import mlflow
 import mlflow.sklearn
 import numpy as np
 import pandas as pd
-
 from mlflow.models import infer_signature
 from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import (
@@ -34,7 +33,6 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 from src import schema
-
 
 DATA_FILE = os.getenv("DATA_FILE", "data/churn_v1.csv")
 EXPERIMENT = "churn"
