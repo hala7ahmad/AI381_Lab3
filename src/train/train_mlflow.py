@@ -53,22 +53,9 @@ def preprocessing() -> ColumnTransformer:
     )
 
 
-# TODO 1: Three different candidate model families
+# Part 8: Intentionally weak model to test the promotion gate
 CANDIDATES = {
-    "logreg": LogisticRegression(
-        max_iter=1000,
-        random_state=42,
-    ),
-    "random_forest": RandomForestClassifier(
-        n_estimators=200,
-        max_depth=8,
-        random_state=42,
-    ),
-    "gradient_boosting": GradientBoostingClassifier(
-        n_estimators=100,
-        learning_rate=0.1,
-        random_state=42,
-    ),
+    "weak": LogisticRegression(C=0.00001, max_iter=1000),
 }
 
 
@@ -124,7 +111,7 @@ def main() -> None:
         stratify=y,
     )
 
-    # TODO 2: Record the exact dataset version
+    # Record the exact dataset version
     data_sha = hashlib.sha256(
         Path(DATA_FILE).read_bytes()
     ).hexdigest()[:12]
@@ -204,7 +191,6 @@ def main() -> None:
             signature = infer_signature(X_te, proba)
 
             # Save model using cloudpickle
-            # Avoid skops untrusted types error
             info = mlflow.sklearn.log_model(
                 sk_model=model,
                 name="model",
